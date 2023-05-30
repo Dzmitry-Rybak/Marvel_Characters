@@ -1,5 +1,5 @@
 
-import { Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './charList.scss';
 import Spinner from '../spinner/spinner';
@@ -15,7 +15,6 @@ class CharList extends Component {
         charList: [],
         loading: true,
         error: false,
-        activeChar: null,
         newItemLoading: false,
         offset: 210,
         charEnded: false,
@@ -63,21 +62,36 @@ class CharList extends Component {
             error: true})
     }
 
-    selectedChar = (i) => {
-        this.setState({
-            activeChar: i
-        })
-        this.props.onCharSelected(i);
+    // using ref to set change className to selected character:
+    charRefList = [];
+    setCharRef = char => {
+        if(char) {
+            char.setAttribute('tabindex', '0')
+            this.charRefList.push(char);
+        }
     }
 
-
-
+    focusOnChar = (index) => {
+        this.charRefList.forEach(item => item.classList.remove('char__item_selected'));
+        this.charRefList[index].classList.add('char__item_selected');
+    }
+    
     renderItems = (list) => {
-        return list.map(char => (
+        return list.map((char, index) => (
             <li 
-                className={ this.state.activeChar === char.id ? "char__item char__item_selected" : "char__item"} 
+                ref = {this.setCharRef}  // ref - element li 
+                className="char__item"
                 key={char.id}
-                onClick={() => this.selectedChar(char.id)}>
+                onClick={() => {
+                    this.props.onCharSelected(char.id);
+                    this.focusOnChar(index);
+                    }}
+                onKeyDown = {(event) => {
+                    if(event.key === ' ' || event.key === 'Enter') {
+                        this.props.onCharSelected(char.id);
+                        this.focusOnChar(index);
+                    }
+                }}>
                     <img src={char.thumbnail} style={char.thumbnail.indexOf('image_not_available') !== -1 ? {objectFit: 'unset'} : null} alt={char.name}/>
                     <div className="char__name">{char.name}</div>
             </li>
