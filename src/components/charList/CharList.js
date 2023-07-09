@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import './charList.scss';
-import Spinner from '../spinner/spinner';
+import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import useMarvelService from '../../services/MarvelService'
 
@@ -43,13 +43,6 @@ const CharList = (props) =>  {
 
     // using ref to set change className to selected character:
     const charRefList = useRef([]);
-
-    // const setCharRef = char => {
-    //     if(char) {
-    //         char.setAttribute('tabindex', '0')
-    //         this.charRefList.push(char);
-    //     }
-    // }
  
     const focusOnChar = (index) => {
         charRefList.current.forEach(item => item.classList.remove('char__item_selected'));
