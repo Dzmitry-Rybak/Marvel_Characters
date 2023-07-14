@@ -1,10 +1,11 @@
 
 import React, { useState, useEffect, useRef } from 'react';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import PropTypes from 'prop-types';
 import './charList.scss';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
-import useMarvelService from '../../services/MarvelService'
+import useMarvelService from '../../services/MarvelService';
 
 const CharList = (props) =>  {
 
@@ -49,26 +50,34 @@ const CharList = (props) =>  {
         charRefList.current[index].classList.add('char__item_selected');
     }
     
+    const duration = 500;
+
     const renderItems = (list) => {
-        return list.map((char, index) => (
-            <li 
-                ref = {el => charRefList.current[index] = el}  // el - link on DOM-element
-                className="char__item"
-                key={char.id}
-                onClick={() => {
-                    props.onCharSelected(char.id);
-                    focusOnChar(index);
-                    }}
-                onKeyDown = {(event) => {
-                    if(event.key === ' ' || event.key === 'Enter') {
-                        props.onCharSelected(char.id);
-                        focusOnChar(index);
-                    }
-                }}>
-                    <img src={char.thumbnail} style={char.thumbnail.indexOf('image_not_available') !== -1 ? {objectFit: 'unset'} : null} alt={char.name}/>
-                    <div className="char__name">{char.name}</div>
-            </li>
-        ))
+        return <TransitionGroup component={'ul'} className="char__grid">
+                {list.map((char, index) => (
+                    <CSSTransition
+                    timeout={duration}
+                    classNames="chars"
+                    key={char.id}>
+                        <li 
+                            ref = {el => charRefList.current[index] = el}  // el - link on DOM-element
+                            className="char__item"
+                            onClick={() => {
+                                props.onCharSelected(char.id);
+                                focusOnChar(index);
+                                }}
+                            onKeyDown = {(event) => {
+                                if(event.key === ' ' || event.key === 'Enter') {
+                                    props.onCharSelected(char.id);
+                                    focusOnChar(index);
+                                }
+                            }}>
+                                <img src={char.thumbnail} style={char.thumbnail.indexOf('image_not_available') !== -1 ? {objectFit: 'unset'} : null} alt={char.name}/>
+                                <div className="char__name">{char.name}</div>
+                        </li>
+                    </CSSTransition>
+                ))}
+            </TransitionGroup>
     }
 
     const items = renderItems(charList);
@@ -80,9 +89,7 @@ const CharList = (props) =>  {
         <div className="char__list">
             {spinner}
             {errorMessage}
-            <ul className="char__grid">
-                {items}
-            </ul>
+            {items}
             <button 
                 className="button button__main button__long"
                 style={{'display': charEnded ? 'none' : 'block'}}

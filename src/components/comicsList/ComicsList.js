@@ -5,9 +5,6 @@ import useMarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 
-import avantagers from '../../resources/img/Avengers.png';
-import avantagersLogo from '../../resources/img/Avengers_logo.png';
-
 
 import './comicsList.scss';
 

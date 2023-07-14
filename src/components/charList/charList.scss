@@ -41,3 +41,11 @@
         color: #fff;
     }
 }
+
+.chars-enter {
+    opacity: 0;
+}
+.chars-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+}
