@@ -1,14 +1,14 @@
 import { useParams, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-import useMarvelService from '../../services/MarvelService'
-import Spinner from '../spinner/Spinner';
-import ErrorMessage from '../errorMessage/ErrorMessage';
+import useMarvelService from '../../../services/MarvelService';
+import Spinner from '../../spinner/Spinner';
+import ErrorMessage from '../../errorMessage/ErrorMessage';
 
 import './singleComicPage.scss';
 
 const SingleComicPage = () => {
-    const {comicId} = useParams();
+    const {id} = useParams();
     const [comic, setComic] = useState(null);
 
     const {loading, error, clearError, getComic} = useMarvelService();
@@ -16,12 +16,12 @@ const SingleComicPage = () => {
 
     useEffect(() => {
         updateComic()
-    }, [comicId])
+    }, [id])
 
 
     const updateComic = () => {
         clearError()
-        getComic(comicId)
+        getComic(id)
             .then(onComicLoaded)
     }
 
