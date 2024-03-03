@@ -1,6 +1,6 @@
-# [MarvelDatabase-Web](https://marvel-characters-ivory.vercel.app/)
+# [Marvel information portal](https://marvel-characters-ivory.vercel.app/)
 
-**MarvelDatabase-Web** is a dynamic and interactive website that utilizes the Marvel Developer API to provide extensive information about your favorite Marvel characters, comics, and series. This project aims to offer users a pleasant experience while exploring the vast Marvel universe.
+**Marvel information portal** is a dynamic and interactive website that utilizes the Marvel Developer API to provide extensive information about your favorite Marvel characters, comics, and series. This project aims to offer users a pleasant experience while exploring the vast Marvel universe.
 
 ## Features
 
